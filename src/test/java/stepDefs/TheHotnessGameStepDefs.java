@@ -12,6 +12,7 @@ import pages.GamePage;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 
 public class TheHotnessGameStepDefs {
@@ -21,7 +22,7 @@ public class TheHotnessGameStepDefs {
     private BaseFunc baseFunc = new BaseFunc();
     private Helper helper = new Helper(baseFunc);
     private GamePage gamePage = new GamePage(baseFunc);
-    private API api = new API(baseFunc);
+    private API api = new API(baseFunc, gamePage);
     private String popularPoll;
 
     @Given("I open homepage of the site")
@@ -35,7 +36,7 @@ public class TheHotnessGameStepDefs {
     }
 
     @When("I retrieve information about a particular game from site api")
-    public void get_api() {
+    public void get_api() throws MalformedURLException {
         response = api.getResponse(URL, BASEPATH);
     }
 

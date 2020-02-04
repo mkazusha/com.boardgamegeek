@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import pages.GamePage;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,21 +17,24 @@ import javax.xml.xpath.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import static io.restassured.RestAssured.given;
 
 public class API {
     private BaseFunc baseFunc;
+    private GamePage page;
     private static String pollValue;
 
-    public API(BaseFunc baseFunc) {
+    public API(BaseFunc baseFunc, GamePage page) {
         this.baseFunc = baseFunc;
+        this.page = page;
     }
 
-    public String getResponse(String baseURL, String basePath) {
+    public String getResponse(String baseURL, String basePath) throws MalformedURLException {
         RestAssured.baseURI = baseURL;
         RestAssured.basePath = basePath;
-        Response response = given().contentType(ContentType.XML).log().all().get("/" + baseFunc.getPageId());
+        Response response = given().contentType(ContentType.XML).log().all().get("/" + page.getGameID());
         return response.getBody().asString();
     }
 

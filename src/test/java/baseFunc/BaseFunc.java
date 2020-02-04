@@ -9,6 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class BaseFunc {
@@ -47,18 +49,6 @@ public class BaseFunc {
     public boolean isElementPresent(By locator) {
         waitForElement(locator);
         return getAllElements(locator).isEmpty();
-    }
-
-    public String getPageId() {
-        String id = "";
-        String[] split = driver.getCurrentUrl().split("\\/+");
-        for (String s : split) {
-            if (s.matches("\\d+")) {
-                id = s;
-                break;
-            }
-        }
-        return id;
     }
 
     public void closeBrowser() {
