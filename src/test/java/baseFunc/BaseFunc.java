@@ -1,5 +1,6 @@
 package baseFunc;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,7 +17,7 @@ public class BaseFunc {
     private WebDriverWait wait;
 
     public BaseFunc() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 10);
