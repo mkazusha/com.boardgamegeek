@@ -6,18 +6,18 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class Helper {
-    private final By HOTNESS_RANK = By.xpath(".//span[@class='ng-binding']");
+    private final By HOTNESS_RANK = By.xpath(".//span[@class='ng-binding' and contains(text(), 'Rank:')]");
     private BaseFunc baseFunc;
     List<WebElement> ranks;
 
-    public Helper (BaseFunc baseFunc) {
+    public Helper(BaseFunc baseFunc) {
         this.baseFunc = baseFunc;
     }
 
     public void pushTheHotnessGame() {
         ranks = baseFunc.getAllElements(HOTNESS_RANK);
         for (WebElement rank : ranks) {
-            if (rank.getText().contains("Rank: ")) {
+            if (!rank.getText().isEmpty()) {
                 if (Integer.parseInt(rank.getText().substring(6)) == 1) {
                     rank.click();
                     break;
@@ -26,3 +26,4 @@ public class Helper {
         }
     }
 }
+
