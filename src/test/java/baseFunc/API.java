@@ -34,7 +34,7 @@ public class API {
     public String getResponse(String baseURL, String basePath) throws MalformedURLException {
         RestAssured.baseURI = baseURL;
         RestAssured.basePath = basePath;
-        Response response = given().contentType(ContentType.XML).log().all().get("/" + page.getGameID());
+        Response response = given().contentType(ContentType.XML).get("/" + page.getGameID());
         return response.getBody().asString();
     }
 
