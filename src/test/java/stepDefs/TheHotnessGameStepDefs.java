@@ -31,7 +31,7 @@ public class TheHotnessGameStepDefs {
     }
 
     @When("I navigate to the page of the game with highest rank in The Hotness left side menu")
-    public void check_rank() throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
+    public void check_rank() {
         helper.pushTheHotnessGame();
     }
 

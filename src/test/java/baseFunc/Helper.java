@@ -14,27 +14,14 @@ public class Helper {
         this.baseFunc = baseFunc;
     }
 
-    public String getHighestRank() {
-        ranks = baseFunc.getAllElements(HOTNESS_RANK);
-        int highestRank = 0;
-        String rankValue = "";
-        for (WebElement rank : ranks) {
-            if (rank.getText().contains("Rank: ")) {
-                if (highestRank < Integer.parseInt(rank.getText().substring(6))) {
-                    highestRank = Integer.parseInt(rank.getText().substring(6));
-                }
-                rankValue = Integer.toString(highestRank);
-            }
-        }
-        return rankValue;
-    }
-
     public void pushTheHotnessGame() {
         ranks = baseFunc.getAllElements(HOTNESS_RANK);
         for (WebElement rank : ranks) {
-            if (rank.getText().contains(getHighestRank())) {
-                rank.click();
-                break;
+            if (rank.getText().contains("Rank: ")) {
+                if (Integer.parseInt(rank.getText().substring(6)) == 1) {
+                    rank.click();
+                    break;
+                }
             }
         }
     }
