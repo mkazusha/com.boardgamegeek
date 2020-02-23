@@ -18,6 +18,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
@@ -34,7 +37,7 @@ public class API {
     public String getResponse(String baseURL, String basePath) throws MalformedURLException {
         RestAssured.baseURI = baseURL;
         RestAssured.basePath = basePath;
-        Response response = given().contentType(ContentType.XML).log().all().get("/" + page.getGameID());
+        Response response = given().contentType(ContentType.XML).get("/" + page.getGameID());
         return response.getBody().asString();
     }
 
@@ -49,8 +52,8 @@ public class API {
         return file;
     }
 
-    public static String getVoteNumber(Element element) {
-        return element.getAttribute("numvotes");
+    public static Integer getVoteNumber(Element element) {
+        return Integer.parseInt(element.getAttribute("numvotes"));
     }
 
     public static String getLanguageDependence(Element element) {
@@ -62,16 +65,13 @@ public class API {
     }
 
     public static String getPopularPoll(NodeList nodes) {
-        int maxVote = 0;
+        HashMap<Integer, String> polls = new HashMap<Integer, String>();
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
-            int voteNumber = Integer.parseInt(getVoteNumber((Element) node));
-            if (voteNumber > maxVote) {
-                maxVote = voteNumber;
-                pollValue = getLanguageDependence((Element) node);
-            }
+            polls.put(getVoteNumber((Element) node),getLanguageDependence((Element) node));
         }
-        return pollValue;
+        Integer maxVote = Collections.max(polls.keySet());
+        return polls.get(maxVote);
     }
 
     public static Document prepareXMLDocument(File file) throws IOException, SAXException, ParserConfigurationException {
